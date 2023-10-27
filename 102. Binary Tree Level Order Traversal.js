@@ -76,14 +76,13 @@ var levelOrder1 = function (root) {
   const allLines = []
 
   while (queue.length > 0) {
-    const queueLength = queue.length
     const currentLine = []
-    for (let i = 0; i < queueLength; i++) {
+    for (let i = 0; i < queue.length; i++) {
       const current = queue.shift()
+      currentLine.push(current.val)
 
       if (current.left) queue.push(current.left)
       if (current.right) queue.push(current.right)
-      currentLine.push(current.val)
     }
 
     allLines.push(currentLine)

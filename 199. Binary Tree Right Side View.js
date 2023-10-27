@@ -1,6 +1,35 @@
-// Given the root of a binary tree, return all root-to-leaf paths in any order.
+// Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
 
-// A leaf is a node with no children.
+//           1
+//          / \
+//         2   3
+//          \   \
+//           5   4
+
+//           a
+//          / \
+//         b   c
+//          \   \
+//           d   e
+
+// class Node {
+//   constructor(val) {
+//     this.val = val
+//     this.left = null
+//     this.right = null
+//   }
+// }
+
+// const a = new Node(1)
+// const b = new Node(2)
+// const c = new Node(3)
+// const d = new Node(5)
+// const e = new Node(4)
+
+// a.left = b
+// a.right = c
+// b.right = d
+// c.right = e
 
 //           5
 //          / \
@@ -24,7 +53,7 @@
 //    /
 //   m
 //    \
-//     m
+//     n
 
 class Node {
   constructor(val) {
@@ -59,31 +88,7 @@ f.right = l
 g.left = m
 m.right = n
 
-function binaryTreePaths(root) {
-  const result = []
-  dfs(root, [])
-  return result
-
-  function dfs(root, currentArray) {
-    if (root == null) return []
-
-    currentArray.push(root.val)
-
-    if (root.left == null && root.right == null) {
-      const currentString = currentArray.join('->')
-      result.push(currentString)
-    }
-    dfs(root.left, currentArray)
-    dfs(root.right, currentArray)
-    currentArray.pop()
-  }
-}
-
-// ********************
-// ********************
-// ********************
-
-function binaryTreePaths1(root) {
+var rightSideView = function (root) {
   if (root == null) return []
 
   const allPaths = []
@@ -94,23 +99,25 @@ function binaryTreePaths1(root) {
     currentPath.push(root.val)
 
     if (root.left == null && root.right == null) allPaths.push([...currentPath])
-
-    if (root.left != null) dfs(root.left, currentPath)
     if (root.right != null) dfs(root.right, currentPath)
+    if (root.left != null) dfs(root.left, currentPath)
 
     currentPath.pop()
   }
 }
 
-console.log(binaryTreePaths(a))
-console.log(binaryTreePaths1(a))
+var rightSideView1 = function (root) {
+  if (root == null) return []
+  let rightSideNodes = []
+  dfs(root, 0)
+  return rightSideNodes
 
-// f(7) > f(12) > f(N)
-// allPaths = [[11,7,12,6], ]
-// currentPath = [11,7`]
-//
-//
-//
-//
-//
-//
+  function dfs(node, level) {
+    // if (!node) return
+    rightSideNodes[level] = node.val
+    if (node.left !=null) dfs(node.left, level + 1)
+    if (node.right != null) dfs(node.right, level + 1)
+  }
+}
+
+console.log(rightSideView1(a))
